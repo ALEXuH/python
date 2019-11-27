@@ -1,3 +1,4 @@
+from __future__ import print_function
 class Emploee:
     count = 0
     def __init__(self, name, salary):
@@ -11,8 +12,8 @@ class Emploee:
 
 
 em = Emploee("alexuh", 2000)
-print em.name
-print em.salary
+print(em.name)
+print(em.salary)
 em.total()
 
 # __foo__: 定义的是特殊方法，一般是系统定义名字
@@ -21,32 +22,32 @@ em.total()
 
 class A:
     def __init__(self):
-        print "parent construct method"
+        print("parent construct method")
 
     def parentMethod(self):
-        print "parent method"
+        print("parent method")
 
 class B:
     def parentMethod1(self):
-        print "parent method"
+        print("parent method")
 
 class C(A,B):
     __secrectCount = 1
     def __init__(self):
-        print "child construct method"
+        print("child construct method")
 
     def parentMethod(self):
-        print "child method"
+        print("child method")
 
     def getCount(self):
         self.__secrectFunction()
         return self.__secrectCount
 
     def __secrectFunction(self):
-        print "i am secrect function"
+        print("i am secrect function")
 
 c = C()
 c.parentMethod()
 c.parentMethod1()
-print c.getCount()
-print c._C__secrectCount
+print(c.getCount())
+print(c._C__secrectCount)

@@ -1,14 +1,14 @@
 # coding=utf-8
 import math
 import random
-print "hello word"
-print "你好，中国"
+print("hello word")
+print("你好，中国")
 
 # 缩进
 if 1 < 3:
-    print "true"
+    print("true")
 else:
-    print "false"
+    print("false")
 
 # 多行语句 [],(),{}不需要换行符
 a1 = "a1"
@@ -38,77 +38,76 @@ type: number::String::List::Tuple::Dictionary
 '''
 # String
 str1 = "alexu like eating"
-print str1[0]
-print str1[0:3]
-print str1[0:6:2]
-print str1[0:]
-print str1[2:]
-print str1 * 3
-print str1 + "test1"
+print(str1[0])
+print(str1[0:3])
+print(str1[0:6:2])
+print(str1[0:])
+print(str1[2:])
+print(str1 * 3)
+print(str1 + "test1")
 
 # List
 names = ["xiaoming", "xiaohong", "xiaohei", "xiaohei1", "xiaohei2"]
 names2 = ["name1"]
-print names[0]
-print names[1:3]
-print names[2:]
-print names[0:4:2]
-print names * 2
-print names + names2
+print(names[0])
+print(names[1:3])
+print(names[2:])
+print(names[0:4:2])
+print(names * 2)
+print(names + names2)
 
 # tuple2
 tuple2 = ("tuple21", "tuple22","tuple23","tuple24","tuple25")
 tuple21 = ("tuple27", "das")
-print tuple2[0]
-print tuple2[1:3]
-print tuple2[1:4:2]
-print tuple2 * 2
-print tuple2 + tuple21
+print(tuple2[0])
+print(tuple2[1:3])
+print(tuple2[1:4:2])
+print(tuple2 * 2)
+print(tuple2 + tuple21)
 
 # Dictory
 dict = {}
 dict["name1"] = "alexuh"
 dict[2] = "dasdas"
 second = {"name": "joion", "name1": 111,111: 222}
-print second["name1"]
-print dict[2]
-print second.keys()
-print second.values()
+print(second["name1"])
+print(dict[2])
+print(second.keys())
+print(second.values())
 
 # type transform
-print int("30")
-print str(30)
-print repr("30")
-print eval("30")
-print list(tuple2)
-# print tuple(list)
-# print set(list)
-# print dict()
-print chr(40)
-print unichr(40)
-print ord('a')
-print hex(30)
-print oct(10)
+print(int("30"))
+print(str(30))
+print(repr("30"))
+print(eval("30"))
+print(list(tuple2))
+# print(tuple(list))
+# print(set(list))
+# print(dict())
+print(chr(40))
+print(ord('a'))
+print(hex(30))
+print(oct(10))
 
 # and or not
 a = "true"
 b = bool(0)
 if a and b:
-    print "true"
+    print("true")
 else:
-    print "false"
+    print("false")
 
 if a or b:
-    print "true"
+    print("true")
 else:
-    print "false"
+    print("false")
 
 if not(a and b):
-    print "true"
+    print("true")
 else:
-    print "false"
+    print("false")
 
-print id(a)
+print(id(a))
 
 # in / not in
 if a in names:
@@ -123,25 +122,25 @@ else:
 
 num = 10
 if (num == 3):
-    print "3"
+    print("3")
 elif (num == 4):
-    print "4"
+    print("4")
 elif (num == 5):
-    print "5"
+    print("5")
 else:
-    print "other"
+    print("other")
 
 # while for
 count = 0
 while (count < 9):
-    print 'count: ',count
+    print('count: ',count)
     count += 1
 
 for n in names:
-    print "name:",n
+    print("name:",n)
 
 for index in range(len(names)):
-    print "name: ",names[index]
+    print("name: ",names[index])
 
 # break continue pass
 print("--------------")
@@ -157,55 +156,55 @@ for name1 in names:
 
 print(dir(math))
 
-print random.choice(range(1, 100, 2))
+print(random.choice(range(1, 100, 2)))
 
 import time
 # time module
 ticks = time.time()
-print "time: ", ticks
-print time.localtime(ticks)
-print time.asctime(time.localtime(ticks))
-print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+print("time: ", ticks)
+print(time.localtime(ticks))
+print(time.asctime(time.localtime(ticks)))
+print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
 # calendar
 import calendar
 cal = calendar.month(2016, 1)
-print cal
+print(cal)
 
 # dataTime
 import datetime
 date = datetime.datetime.now()
 
 def hello(name, age = 20):
-    print "hello function",name,age
+    print("hello function",name,age)
 
 hello("xiaomn")
 
 def names(*name):
     for name2 in name:
-        print name2
+        print(name2)
 names("xa",32)
 
 sum1 = lambda x,y: x + y
-print sum1(10,400)
+print(sum1(10,400))
 
 # IO/File
 # str = raw_input("input: ")
-# print "inpout content:", str
+# print("inpout content:", str)
 
 file = open("aa","w+", 1000)
 file.write("aaa")
-print file.read(10)
-print type(file)
+print(file.read(10))
+print(type(file))
 file.close()
 
 # exception
 try:
     fh = open("test", "w")
 except IOError:
-    print "can not find file"
+    print("can not find file")
 else:
-    print "it is ok"
+    print("it is ok")
     fh.close()
 
 try:
@@ -216,11 +215,11 @@ try:
         print("close file")
         fh.close()
 except IOError:
-    print "can not find file"
+    print("can not find file")
 
 # inner function
-print abs(-210)
-print cmp(1, 2)
-print bool(1)
-print int(20.11)
+print(abs(-210))
+print(cmp(1, 2))
+print(bool(1))
+print(int(20.11))
 
