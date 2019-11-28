@@ -1,75 +1,71 @@
 # -*- coding: UTF-8 -*-
-import source as s
 from bs4 import BeautifulSoup as bs
+html_doc = """
+<html><head><title>The Dormouse's story</title></head>
+<body>
+<p class="title"><b>The Dormouse's story</b></p>
 
-#print(s.html_doc)
-#soup = bs(s.html_doc, "html.parser")
-soup = bs(s.html_doc, "lxml")
-#soup = bs(s.html_doc, "html.parser")
-#print(soup)
-#print(soup.text.title().strip())
-#print(soup.title)
-print(soup.p)
+<p class="story">Once upon a time there were three little sisters; and their names were
+<a href="http://example.com/elsie" class="sister" id="link1">Elsie</a>,
+<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> and
+<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>;
+and they lived at the bottom of a well.</p>
+
+<p class="story">...</p>
+"""
+
+"""
+解析器
+html.paeser: 速度适中，容错能力强
+lxml：第三方解析器需要安装（pip install lxml），速度快，容错能力强
+html5lib: 速度慢，最好的容错性
+"""
+#soup = bs(html_doc, "html.parser")
+#soup = bs(html_doc, "html5lib")
+soup = bs(html_doc, "lxml")
+
+#print(soup.prettify())
+# Tag->[name,attributes,string,parent]
+print(soup.name)
 print(soup.title)
 print(soup.title.name)
 print(soup.title.string)
 print(soup.title.parent.name)
+print(soup.p["class"])
+print(soup.p.attrs["class"])
+print(soup.p.parent.name)
+
+# 通过.来去tag只能取到第一个tag find_all取所有的Tag
+# find_all() 和 find() 只搜索当前节点的所有子节点,孙子节点等
+print(soup.body.a)
+print(soup.findAll("a"))
+print(soup.find(id="link1"))
+print("---")
+# 获取一个tag所有的直接子节点(可递归获取所有节点)
+print(soup.body.contents)
+print("========")
+for child in soup.children:
+    print(child.name)
+
+for child in soup.body.children:
+    print(child.name)
+
+# 输出多个子节点的string
+print("=========")
+for i in soup.strings:
+    print(repr(i))
+print("---")
+for i in soup.body.stripped_strings:
+    print(repr(i))
+
+# 包含href属性的
+print(soup.findAll(href=True))
+print(soup.findAll(href=True, id="link1"))
+print(soup.findAll(href=True, id="link1", attrs={"data-das": "das"}))
 print("===")
-print(soup.find_all("a")[0])
-print(soup.find(id="link3"))
+print(soup.findAll(class_="story"))
 
-district = "dasd"
-filter_str = "&area_district.name=eq.%s" % district
-print(filter_str)
-
-
-data = [
-    {
-        "count": 6,
-        "executeDep": "城管执法局"
-    },
-    {
-        "count": 1,
-        "executeDep": "城管中队"
-    },
-    {
-        "count": 1,
-        "executeDep": "城管中队"
-    }
-]
-
-data1 = []
-map = {"街区工作站":["静安寺街道分中心"],"市容所":["市容所","规划资源局"],"城管中队":["城管中队", "城管执法局"],"管理办公室":["街道社区管理办公室","四明居民区"],"房管办事处":["建管委","华园物业","房管局"],"绿化所":["绿化市容局"],
-       "党群工作办公室":["人保局", "12319", "12345市民服务热线", "信访办"],"公安派出所":["公安分局"],"市场监管所":["市场监管所"],
-       "发展办公室":["投资办"],"服务办公室":["文化旅游局"],"环卫所":["生态环境局"]}
-for i in data:
-    dep = i["executeDep"]
-    count = i["count"]
-    value = {}
-    for k,v in map.items():
-        if dep in v:
-            value["executeDep"] = dep
-            value["count"] = count
-            for j in data1:
-                print("aa")
-                dep1 = j["executeDep"]
-                count1 = j["count"]
-                if dep == dep1:
-                    count2 = count + count1
-                    print(count2)
-                    j["count"] = count2
-            data1.append(value)
-
-print(data1)
-
-data = []
-for i in data:
-    print("cc")
-print(len(data))
-
-data1 = {"dssa":"dsa","das":"dsadasd"}
-print(",".join(data1.values()))
-
-map = {}
-map[",".join(data1.values())]["aa"] = 20
-print(map)
+print("====")
+# 获取所有a节点的href
+for i in soup.find_all("a", href=True):
+    print(i["href"])
