@@ -35,12 +35,12 @@ def handleSales(sale):
     else:
         return sale1
 
+# 递归获取最佳精度值
 def getFloatResult(d1, length):
     d2 = collections.OrderedDict()
     for k,v in d1.items():
         sale = round(k, length)
         d2[sale] = v
-        #print(d2)
     if len(d1) != len(d2):
         return getFloatResult(d1, length + 1)
     else:
@@ -59,25 +59,28 @@ class Rank:
         self.total = total
         self.count = count
     def show(self):
-        #self.head = getFloatResult(self.head, 2)
-        #self.tail = getFloatResult(self.tail, 2)
+        self.head = getFloatResult(self.head, 2)
+        self.tail = getFloatResult(self.tail, 2)
         print(self.head)
         print(self.tail)
         result = "%s：%s万 \n品牌数量：%s" % (self.topic, "%.2f" % (self.total / 10000.0), self.count)
-        str = "销售前三："
+        str5 = "销售前三："
         a = 1
         for k,v in self.head.items():
-            str1 = "0%s、%s：%s万" % (a, "/".join(v), k / 10000.0)
-            str = str + "\n" + str1
+            print(type(k))
+            value3 = ("%.2f" % k) if len(str(k).split(".")[1]) < 2 else k
+            str1 = "0%s、%s：%s万" % (a, "/".join(v), value3)
+            str5 = "%s\n%s" % (str5,str1)
             a += 1
         str1 = ""
         b = 3
         for k,v in self.tail.items():
-            str2 = "0%s、%s：%s万" % (b, "/".join(v), k / 10000.0)
+            value1 = ("%.2f" % k) if len(str(k).split(".")[1]) < 2 else k
+            str2 = "0%s、%s：%s万" % (b, "/".join(v),  value1)
             str1 = str2 + "\n" + str1
             b -= 1
         str1 = "销售后三："+ "\n" + str1
-        return result + "\n" + str + "\n" + str1
+        return result + "\n" + str5 + "\n" + str1
 def unify(v):
     if v is None:
         return v
@@ -103,12 +106,12 @@ def getValues(value, topic):
     for row in head.itertuples(name="RowData"):
         sale = row.sales
         v = getList(value, sale)
-        d1[sale] = v
+        d1[sale / 10000.0] = v
     d2 = collections.OrderedDict()
     for row in tail.itertuples(name="RowData"):
         sale = row.sales
         v = getList(value, sale)
-        d2[sale] = v
+        d2[sale / 10000.0] = v
     rank = Rank(topic, d1, d2, total, size)
     return rank
 
@@ -127,12 +130,12 @@ def getValuesYt(value, topic):
     for row in head.itertuples(name="RowData"):
         sale = row.sales
         v = getList(value, sale)
-        d1[sale] = v
+        d1[sale / 10000.0] = v
     d2 = collections.OrderedDict()
     for row in tail.itertuples(name="RowData"):
         sale = row.sales
         v = getList(value, sale)
-        d2[sale] = v
+        d2[sale / 10000.0] = v
     rank = Rank(topic, d1, d2, total, size)
     return rank
 
@@ -216,5 +219,6 @@ with pd.ExcelFile(file1) as xls:
         f.write("\n")
         f.write(dep.show())
     f.close()
+print("\n\n")
 print("Success generate Details file")
-#raw_input()
+raw_input()
