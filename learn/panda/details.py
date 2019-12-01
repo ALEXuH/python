@@ -1,11 +1,11 @@
-#!/usr/bin/python
+
 # -*- coding: UTF-8 -*-
 # @Author : ALEXuH
 # @Created on : 2019/9/19 0019
 
 import pandas as pd
 import collections
-
+import math as _math
 import configparser
 import os
 from os import path as _path
@@ -35,6 +35,17 @@ def handleSales(sale):
     else:
         return sale1
 
+def getFloatResult(d1, length):
+    d2 = collections.OrderedDict()
+    for k,v in d1.items():
+        sale = round(k, length)
+        d2[sale] = v
+        #print(d2)
+    if len(d1) != len(d2):
+        return getFloatResult(d1, length + 1)
+    else:
+        return d2
+
 class Rank:
     topic = None
     head = None
@@ -48,6 +59,10 @@ class Rank:
         self.total = total
         self.count = count
     def show(self):
+        #self.head = getFloatResult(self.head, 2)
+        #self.tail = getFloatResult(self.tail, 2)
+        print(self.head)
+        print(self.tail)
         result = "%s：%s万 \n品牌数量：%s" % (self.topic, "%.2f" % (self.total / 10000.0), self.count)
         str = "销售前三："
         a = 1
@@ -129,15 +144,24 @@ floor_partition = ["主题街"]
 yt_partition_detail = ["主次力店及主题餐厅"]
 yt_partition = ["餐饮", "服装", "生活配套", "服饰配套"]
 yt_child = ["儿童业态"]
-not_need_list = ["装修", "未进场", ""]
+not_need_list = ["装修", "未进场", "", "撤场"]
 day = getCol()[number]
 
 with pd.ExcelFile(file1) as xls:
     df = pd.read_excel(xls, unicode("销售", "utf-8"),names=["yt", "floor", "partition", "sales"], usecols=[2, 4, 6, day], skiprows=[1, 2, 3, 4])\
         .dropna(how="any", subset=["yt", "floor", "partition"])
     for row in df.itertuples(name="RowData"):
-        sale = unify(str(row.sales).strip())
-        if sale in not_need_list:
+        # sale = unify(str(row.sales).strip())
+        # if sale in not_need_list:
+        #     df.drop(index=row.Index, inplace=True)
+        sale = row.sales
+        typeSale = type(sale)
+        #print("%s %s %s %s %s" % (type(row.sales), row.sales, row.yt, row.floor, row.partition))
+        if typeSale != int and typeSale != float:
+            #print(typeSale)
+            df.drop(index=row.Index, inplace=True)
+    for row in df.itertuples(name="RowData"):
+        if _math.isnan(row.sales):
             df.drop(index=row.Index, inplace=True)
     result_list = []
     result1 = ""
@@ -147,12 +171,12 @@ with pd.ExcelFile(file1) as xls:
         value = df[df["yt"] == unify(i)]
         total = value["sales"].sum()
         c = 1
-        he = i + ": " + "%.2f" % (total / 10000.0) + "万\n0"
+        he = i + "：" + "%.2f" % (total / 10000.0) + "万\n"
         for row in value.itertuples(name="RowData"):
             if c < 10:
-                he = he + "0" + str(c) + "、" + row.partition + ": "+str(row.sales / 10000.0) + "万\n"
+                he = he + "0" + str(c) + "、" + row.partition + "："+ str("%.2f" % (row.sales / 10000.0)) + "万\n"
             else:
-                he = he + str(c) + "、" + row.partition + ": "+str(row.sales / 10000.0) + "万\n"
+                he = he + str(c) + "、" + row.partition + "："+ str("%.2f" % (row.sales / 10000.0)) + "万\n"
             c += 1
         result1 = he
     for i in floor_partition:
@@ -193,4 +217,4 @@ with pd.ExcelFile(file1) as xls:
         f.write(dep.show())
     f.close()
 print("Success generate Details file")
-raw_input()
+#raw_input()

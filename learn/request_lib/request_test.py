@@ -3,7 +3,7 @@
 # @Author : ALEXuH
 # @Created on : 2019/9/14 0014
 import requests
-# res = requests.get("https://www.runoob.com/python/python-json.html")
+res = requests.get("https://www.runoob.com/python/python-json.html")
 # print(res.status_code)
 # reponse header
 # print(res.headers)
@@ -12,7 +12,7 @@ import requests
 # print(res.encoding)
 # print(res.next)
 # print(res.cookies)
-# #print(res.json(res))
+print(res.json())
 # print(res.content)
 # print(res.text)
 # print(res.encoding)
