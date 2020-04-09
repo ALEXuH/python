@@ -17,6 +17,9 @@ cf.read(config_path, encoding="utf-8")
 file1 = _path.join(_path.dirname(os.path.realpath(__file__)), cf.get("Detail", "use_file"))
 file2 = _path.join(_path.dirname(os.path.realpath(__file__)), cf.get("Detail", "detail_file_name"))
 number = int(cf.get("Detail", "day"))
+print(number)
+print(config_path)
+#exit()
 
 def getCol():
     map = {}
