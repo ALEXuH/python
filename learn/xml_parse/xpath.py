@@ -40,8 +40,19 @@ s = """
 </bookstore>
 html = etree.html("")
 """
-from lxml import etree
+
 se = etree.HTML(s)
 print(se.xpath("//bookstore")[0])
 # 选取所有category属性为WEb的book节点
 print(se.xpath("//book[@category='WEB']"))
+values = se.xpath("//book[@category='WEB']/title/text()")
+for v in values:
+  print(v)
+
+# 价格大于20
+price_values = se.xpath("//book[price>20]/price/text()")
+print(price_values)
+print("===========")
+values1 = se.xpath("//author/text()")
+for v1 in values1:
+  print(v1)

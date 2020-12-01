@@ -217,9 +217,32 @@ try:
 except IOError:
     print("can not find file")
 
-# inner function
+# 内置函数inner function
 print(abs(-210))
-print(cmp(1, 2))
+#print(cmp(1, 2))
 print(bool(1))
 print(int(20.11))
 
+# 函数式编程 lamada param_list:expr
+a = lambda x,y : x + y
+print(a(14,39))
+
+# map, reduce, filter, sorted等内置函数式编程函数
+func = lambda x : x**x
+list = [1,2,10]
+#print(list(map(func, list))) #返回迭代器对象
+#print(filter(lambda x: x%2 == 0, list))
+
+# 列表解析式 [expr for param in list if expr] 底层c语言实现效率更高
+print([i for i in list])
+print([i*2 for i in list])
+print([i for i in list if i%2 == 0])
+
+# enumerate 同时遍历index和value
+for i,v in enumerate(list):
+    print(str(i)+ ":" + str(v))
+
+
+# 迭代器生成器
+
+# 
