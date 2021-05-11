@@ -36,11 +36,22 @@ image_dir = _os.path.join(_os.curdir, "images")
 if not _os.path.isdir(image_dir):
     _os.makedirs(image_dir)
 j = 0
+count = 0
+error_img = []
 for img in result:
-    res = requests.get(img)
-    res.raise_for_status
-    filename = img.split("/")[-1]
-    filepath = _os.path.join(image_dir, filename)
-    with open(filepath, "wb") as f:
-        for chunk in res.iter_content(4096):
-            f.write(chunk)
+    if '.' not in img:
+        error_img.append(img)
+    else:
+        print(img)
+        res = requests.get(img)
+        res.raise_for_status
+        filename = img.split("/")[-1]
+        print(filename)
+        count += 1;
+        filepath = _os.path.join(image_dir, filename)
+        with open(filepath, "wb") as f:
+            for chunk in res.iter_content(4096):
+                f.write(chunk)
+print(len(result))
+print(count)
+print(error_img)

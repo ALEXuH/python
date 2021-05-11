@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import thread
+import threading as _threading
 import time
 
 # 为线程定义一个函数
@@ -14,9 +14,9 @@ def print_time( threadName, delay):
 
 # 创建两个线程
 try:
-    thread.start_new_thread(print_time, ("Thread-1", 2, ))
-    thread.start_new_thread(print_time, ("Thread-2", 4, ))
-    thread.start_new_thread(print_time, ("Thread-3", 1))
+    _threading.start_new_thread(print_time, ("Thread-1", 2, ))
+    _threading.start_new_thread(print_time, ("Thread-2", 4, ))
+    _threading.start_new_thread(print_time, ("Thread-3", 1))
 except:
     print ("Error: unable to start thread")
 

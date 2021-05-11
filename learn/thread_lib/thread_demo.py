@@ -1,5 +1,5 @@
 import time as _time
-import threading  as _threading
+import threading as _threading
 from time import sleep
 
 '''
